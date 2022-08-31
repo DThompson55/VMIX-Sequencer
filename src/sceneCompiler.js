@@ -8,7 +8,15 @@ var scenes = [];
 var sceneNumber = 1;
 
 function buildScenes(rows, callback){
-    for (var i = 0 ; i < rows.length; i++){
+
+    var i = 0;
+    var row = rows[i];
+    let scene = newScene(); 
+    addToScene(scene,"Preview",row)  ;
+    scene.description = ""
+    i++;
+
+    for (; i < rows.length; i++){
         var row = rows[i];
         var prevRow = row;
         if (i > 0 ) prevRow = rows[i-1];
@@ -20,10 +28,12 @@ function buildScenes(rows, callback){
             i++;
             row = rows[i];
         }
-        addToScene(scene,"Preview",row)  
+        addToScene(scene,"Preview",row) 
     }   
+
     callback(null,scenes);
 }
+
 
 function newScene(){
     let scene = Object.assign({}, sceneTemplate); // new scene
@@ -31,13 +41,14 @@ function newScene(){
 //    if (scene.overlay) delete scene.overlay;
 //    scene.description="blank";
     scene.actions = [];
+    scene.undoActions = [];
     scenes.push(scene);
     return scene;
 }
 
 function addToScene(scene, action, row){
 //    console.log("Adding ",action, row,"to",scene)
-    let cmd = Object.assign({}, cmdTemplate); // new scene
+    let cmd = Object.assign({}, cmdTemplate); // new commmand within a scene
 
     if (action === "Overlay"){
         scene.overlay = row.description;
@@ -47,9 +58,10 @@ function addToScene(scene, action, row){
     }
     cmd.Function = action;
     cmd.Input = row.inputNumber;
+    cmd.Ignore = row.inputNumber;
     if (action === "Fade"){
         delete cmd.Input;
-        cmd.Duration = 1000;
+        cmd.Duration = (process.env["VMIX_FADE"] || 500);
     }
     if (!scene.description)
         scene.description = row.description;

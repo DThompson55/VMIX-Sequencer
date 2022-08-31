@@ -42,7 +42,7 @@ try {
 	}
 	row.desc =r.getCell("E").value;
 	if ( row.desc == null )	row.desc = "";
-  	row.description = row.inputNumber+"/"+row.shortTitle+"/"+row.desc
+  	row.description = row.inputNumber+" / "+row.shortTitle+" / "+row.desc
 
 	rows[rowCount++] = row; 
 // console.log(row)

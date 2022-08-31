@@ -4,6 +4,17 @@ const path = require('path');
 
 const isMac = process.platform === 'darwin'
 
+if (process.env["VMIX_DELAY"]){
+   console.log("VMIX_Delay Env Vbl is set to",process.env["VMIX_DELAY"])   
+} else {
+      console.log("VMIX_Delay Env Vbl is NOT set. Default to",500)   
+}
+if (process.env["VMIX_FADE"]){
+   console.log("VMIX_FADE Env Vbl is set to",process.env["VMIX_FADE"])   
+} else {
+      console.log("VMIX_FADE Env Vbl is NOT set. Default to",500)   
+}
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   // eslint-disable-line global-require
@@ -26,7 +37,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index3.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

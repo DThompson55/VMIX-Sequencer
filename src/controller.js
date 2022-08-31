@@ -32,11 +32,13 @@ function setNextScene(){
 
 function setPreviousScene(){
  var scene = scnMgr.getPreviousScene()
- try { sendScene(scene) }catch(c){return {}}
+// console.log("Sending Previous Scene ---------------",scene)
+ try { sendScene(scene) }catch(c){console.log("Error Sending Scene",c);return {}}
  return  scnMgr.getDisplayText();
 }
 
 async function sendScene(scene, i=0){  // yes, this is recursive, so keep that i=0
+//    console.log("sending scene",i,scene.actions[i])
     if ( i < scene.actions.length){
         var action = scene.actions[i];
         response = await vMix.send( action )

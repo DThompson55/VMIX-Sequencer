@@ -13,7 +13,24 @@ return getScene(currentScene)
 
 function getPreviousScene(){
 if (currentScene > 0) currentScene--;
-return getScene(currentScene)
+var previousScene = getScene(currentScene)
+var scene =    {"number": "INITIAL", "actions":[] }
+scene.description = previousScene.description;
+scene.number = previousScene.number;
+
+for (i in previousScene.actions){
+    var cmd =      {"Function": "blank", "Input": -1}; 
+    cmd.Function = previousScene.actions[i].Function;
+    cmd.Input = previousScene.actions[i].Input;
+    if ( previousScene.actions[i].Function === "Fade"){
+	cmd.Input = previousScene.actions[i].Ignore;
+	cmd.Function = "CutDirect";	
+    }
+    scene.actions.push(cmd);
+}
+
+//console.log("built previous scene",scene);
+return scene
 }
 
 function getFirstScene(){

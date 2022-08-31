@@ -9,12 +9,12 @@ function sleep(ms) {
 }
 
 async function send(params){ //function (response)
-        await sleep(1000) // vMix apparently needs some time to process, 
+    var retval = axiosWrapper.vMixSend("/api", params)
+        await sleep(process.env["VMIX_DELAY"] || 500) // vMix apparently needs some time to process, 
         // but how much time? Do I need to pass a time in?
         // maybe it jsut needs to wait for the response
-        return axiosWrapper.vMixSend("/api", params)
-}
-
+        return retval;
+    }
 
 async function connect(callback){//{httpResponse, status}
 

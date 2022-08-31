@@ -1,0 +1,59 @@
+{
+  "name": "vmix-sequencer",
+  "productName": "vmix-sequencer",
+  "version": "0.1.0",
+  "description": "A front end for vMix",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "test": "node test/tester.js"
+  },
+  "keywords": [],
+  "author": "danielthompson",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "vmix-sequencer"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "electron-squirrel-startup": "^1.0.0",
+    "exceljs": "^4.3.0",
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "18.0.3"
+  },
+  "repository": {
+  "type": "git",
+  "url": "git://github.com/DThompson55/VMIX-sequencer.git"
+}
+}

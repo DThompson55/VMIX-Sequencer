@@ -29,10 +29,10 @@ async function connect(callback){//{httpResponse, status}
                 callback({vMixCfg:result, vMixStatus:"Connected to vMix"})
             })
         } catch (err) {
-                       if ( err.code ) 
-                        callback({vMixCfg:null, vMixStatus:err.code+" http://"+err.address+":"+err.port})
-                       else 
-                        callback({vMixCfg:null,vMixStatus:"vMix Not Connected?"})
+           if ( err.code ) 
+            callback({vMixCfg:null, vMixStatus:err.code+" http://"+err.address+":"+err.port})
+           else 
+            callback({vMixCfg:null,vMixStatus:"vMix Not Connected?"})
             }
         }
 

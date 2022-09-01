@@ -8,7 +8,7 @@ var scenes = [];
 var sceneNumber = 1;
 
 
-function buildScenes(rows, callback){
+function buildScenes(rows){
 
     var i = 0;
     var row = rows[i];
@@ -44,7 +44,7 @@ function buildScenes(rows, callback){
         }
     }   
 
-    callback(null,scenes);
+    return scenes;
 }
 
 
@@ -81,12 +81,13 @@ function addToScene(scene, action, row){
 
 async function load(workbookPath, vMixCfg, callback){
 try{
-  await workbookTool.load(workbookPath, vMixCfg, (err, rows)=>{
-  buildScenes(rows, (err,scenes) =>{
-    callback(null,scenes,"")
-  })
+  await workbookTool.load(workbookPath, vMixCfg, (rows, warnings)=>{
+        console.log("1.ERROR",warnings)
+    var scenes = buildScenes(rows);
+        console.log("2.ERROR",warnings)
+    callback(scenes,warnings)
 })
-}catch(err){console.log(err.message);}
+}catch(PreviewInput){console.log(PreviewInput.message);}
 } 
 
 

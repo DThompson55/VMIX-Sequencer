@@ -26,7 +26,7 @@ var mismatch = false;
 		var shortTitle = rows[i].shortTitle;
 		var inputNumber = rows[i].inputNumber;
 
-		if ("inputNumber" == "#N//A"){
+		if (inputNumber == "#N/A"){
 			// we don't care about #N/A
 		} else if (numberBag["_"+inputNumber] == null)  {
 			errorBag[("1.Service Plan Uses an Input Number "+inputNumber+" that isn't defined in vMix")]="";
@@ -53,8 +53,9 @@ var mismatch = false;
 			mismatch=true;	
 		} 
 	}
-	console.log(errorBag.sort())
-	return(mismatch)
+
+	console.log(Object.keys(errorBag).sort())
+	return({"error":mismatch,"msg":(mismatch?"Mismatch warnings. See logs.":"OK")})
 }
 
 //--------------------------------------------------
@@ -107,7 +108,7 @@ try {
    
 
 }
-callback(validate(rows,vMixCfg), rows);
+callback(rows, validate(rows,vMixCfg));
 }
 
 

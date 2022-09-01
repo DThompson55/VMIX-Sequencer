@@ -51,10 +51,10 @@ const createWindow = () => {
   mainWindow.webContents.on('did-finish-load', ()=>{
 
 function loadSceneFile(sceneFilePath, vMixCfg){
-      controller.loadSceneFile(sceneFilePath, vMixCfg, (err,scenes, sceneFileValidation) => {
-         if (err){
-            mainWindow.webContents.send('error', "SceneFile does not match vMix. See logs.")
-         } else {
+      controller.loadSceneFile(sceneFilePath, vMixCfg, (scenes, sceneFileValidation) => {
+         console.log("LOAD SCENE ISSUED",sceneFileValidation)
+         if (sceneFileValidation.error){
+//            mainWindow.webContents.send('warning', "Scene file does not match vMix. See logs.")
             mainWindow.webContents.send('validation', sceneFileValidation)
             controller.setScenes(scenes);
             mainWindow.webContents.send('FILE_OPEN', sceneFilePath)

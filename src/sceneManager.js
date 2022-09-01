@@ -86,7 +86,7 @@ function getScene(n){
 		return {"description": "No More Scenes", "actions":[], "wasSkippedTo":false, "usesAllOneCamera": false, "forceCut":false, "previewOnly":false  }
 }
 
-function loadSceneFile(workbookPath, vMixCfg, callback){ // err, rows, connectionstatus
+function loadSceneFile(workbookPath, vMixCfg, callback){ 
 	loader.load(workbookPath, vMixCfg, callback);
 }
 

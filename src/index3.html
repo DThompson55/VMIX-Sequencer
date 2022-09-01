@@ -8,7 +8,6 @@
     -->
     <title>vMix Sequencer</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> 
-    <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -33,11 +32,16 @@
     <div class="one-line-no-wrap">Current:&nbsp;<span id="current-scene"></span></div></p>
     <div class="one-line-no-wrap">Overlay:&nbsp;<span id="overlay-scene"></span></div>
     <div id="buttons" class="row">
+ 
       <span class="column"><img id="backBtn" src="images/backBtn_Disabled.png" border="0" width="100" height="100"></span>
+      <span class="column"><img src="images/1x1.png" border="0" width="100%" height="1"></span>
+      <span class="column"><img id="skipBtn" src="images/skipBtn.png" border="0" width="100" height="100"></span>
       <span class="column"><img src="images/1x1.png" border="0" width="100%" height="1"></span>
       <span class="column"><img id="fwdBtn" src="images/fwdBtn_Disabled.png"  border="0" width="100" height="100"></span>
     </div></p>
-    <div class="one-line-no-wrap">Preview:&nbsp;<span id="next-scene"></span></div>
+    <div class="one-line-no-wrap">Preview:&nbsp;<span id="preview-scene"></span></div>
+    <div class="one-line-no-wrap">Next Up:&nbsp;<span id="next-scene"></span></div>
+
 
 
     </div>

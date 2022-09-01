@@ -4,10 +4,16 @@ const path = require('path');
 
 const isMac = process.platform === 'darwin'
 
-if (process.env["VMIX_DELAY"]){
-   console.log("VMIX_Delay Env Vbl is set to",process.env["VMIX_DELAY"])   
+if (process.env["VMIX_RESET_PPTS"]){
+   console.log("VMIX_RESET_PPTS Env Vbl is set to and will set PPTs to their Zero position")   
 } else {
-      console.log("VMIX_Delay Env Vbl is NOT set. Default to",500)   
+      console.log("VMIX_RESET_PPTS Env Vbl is NOT set and will not affect PPTs")   
+}
+
+if (process.env["VMIX_DELAY"]){
+   console.log("VMIX_DELAY Env Vbl is set to",process.env["VMIX_DELAY"])   
+} else {
+      console.log("VMIX_DELAY Env Vbl is NOT set. Default to",10)   
 }
 if (process.env["VMIX_FADE"]){
    console.log("VMIX_FADE Env Vbl is set to",process.env["VMIX_FADE"])   
@@ -37,7 +43,7 @@ const createWindow = () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index3.html'));
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
@@ -45,11 +51,15 @@ const createWindow = () => {
   mainWindow.webContents.on('did-finish-load', ()=>{
 
 function loadSceneFile(sceneFilePath, vMixCfg){
-   controller.loadSceneFile(sceneFilePath, vMixCfg, (err,scenes, sceneFileValidation) => {
-      mainWindow.webContents.send('validation', sceneFileValidation)
-      controller.setScenes(scenes);
-      mainWindow.webContents.send('FILE_OPEN', sceneFilePath)
-      mainWindow.setTitle("vMix Sequencer "+sceneFilePath)      
+      controller.loadSceneFile(sceneFilePath, vMixCfg, (err,scenes, sceneFileValidation) => {
+         if (err){
+            mainWindow.webContents.send('error', "SceneFile does not match vMix. See logs.")
+         } else {
+            mainWindow.webContents.send('validation', sceneFileValidation)
+            controller.setScenes(scenes);
+            mainWindow.webContents.send('FILE_OPEN', sceneFilePath)
+            mainWindow.setTitle("vMix Sequencer "+sceneFilePath)  
+         }    
       })
 }
     controller.connect((ctx)=>{
@@ -150,6 +160,10 @@ ipcMain.on('getStatus', (event, arg) => {
 })
 ipcMain.on('getFileName', (event, arg) => {
    event.returnValue = controller.getFileName()
+})
+ipcMain.on('skipBtnMsg', (event, arg) => {
+   console.log("Saw the Skip Button")
+   event.returnValue = controller.skipNextScene()
 })
 
 

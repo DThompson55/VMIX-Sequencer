@@ -39,13 +39,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function setDescriptions(reply){
     document.querySelector('#current-scene').innerHTML = reply.currentSceneName;
+    document.querySelector('#preview-scene').innerHTML = reply.previewSceneName;
     document.querySelector('#next-scene').innerHTML = reply.nextSceneName;
+    if (reply.isPreviewable){
+      document.querySelector('#preview-scene').style.textDecoration = "";
+    } else {
+      document.querySelector('#preview-scene').style.textDecoration = "line-through";
+    }
     if (reply.overlaySceneName) {
       document.querySelector('#overlay-scene').style.display = "inline"
       document.querySelector('#overlay-scene').innerHTML = reply.overlaySceneName;
      } else {
-      document.querySelector('#overlay-scene').style.display = "hidden"
-      document.querySelector('#overlay-scene').innerHTML = "";
+      document.querySelector('#overlay-scene').innerHTML = "No overlay";
      }
 
    buttonMask = reply.buttons;
@@ -54,6 +59,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const backBtn = document.querySelector('#backBtn')
   const fwdBtn = document.querySelector('#fwdBtn')
+  const skipBtn = document.querySelector('#skipBtn')
 
 function updateButtons(buttonMask){
    var image_id = fwdBtn; image_id.src = ((((buttonMask&1)==0))?"images/fwdBtn.png":    "images/fwdBtn_Disabled.png")         ;
@@ -68,6 +74,7 @@ function updateButtons(buttonMask){
 
   fwdBtn.addEventListener   ('click', () => {const reply = ipc.sendSync('fwdBtnMsg');    setDescriptions(reply); })
   backBtn.addEventListener  ('click', () => {const reply = ipc.sendSync('backBtnMsg');   setDescriptions(reply); })
+  skipBtn.addEventListener  ('click', () => {const reply = ipc.sendSync('skipBtnMsg');   setDescriptions(reply); })
 
 
 

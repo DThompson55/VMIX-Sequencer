@@ -10,9 +10,14 @@ function sleep(ms) {
 
 async function send(params){ //function (response)
     var retval = axiosWrapper.vMixSend("/api", params)
-        await sleep(process.env["VMIX_DELAY"] || 500) // vMix apparently needs some time to process, 
+//        console.log(params)
+        if (params.Function == "Fade"){
+            await sleep(params.Duration) 
+        }
+        await sleep(process.env["VMIX_DELAY"] || 10) 
+        // vMix apparently needs some time to process, 
         // but how much time? Do I need to pass a time in?
-        // maybe it jsut needs to wait for the response
+        // maybe it just needs to wait for the fade to complete
         return retval;
     }
 
@@ -31,4 +36,15 @@ async function connect(callback){//{httpResponse, status}
             }
         }
 
-module.exports = {connect:connect, send:send}
+async function resetPowerPoints(vmixCfg){
+    var r = vmixCfg.vMixCfg.vmix.inputs[0].input;
+    for (var i in r){
+        var x = r[i]['$']
+        if (x.type == "PowerPoint"){
+            var p = { "Function":"SetPosition","Value":"0","Input":x.number }
+            await send(p)
+        }
+    }
+}        
+
+module.exports = {connect:connect, send:send, resetPowerPoints, resetPowerPoints}

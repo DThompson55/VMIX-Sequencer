@@ -3,7 +3,12 @@ const vMix = require('./vMixHelper.js')
 
 function connect(callback){ //{vMixCfg:result, vMixStatus:"Connected to vMix"}
 console.log("CONNECTING...");
-    vMix.connect(callback)
+    vMix.connect(cfg=>{
+        if (process.env["VMIX_RESET_PPTS"]){
+            vMix.resetPowerPoints(cfg);
+        }
+        callback(cfg);
+    })
 }
 
 function loadSceneFile(workbookPath, vMixCfg, callback){
@@ -30,29 +35,73 @@ function setNextScene(){
  return  scnMgr.getDisplayText();
 }
 
+function skipNextScene(){
+ var scene = scnMgr.skipNextScene()
+ try { sendScene(scene) }catch(c){console.log(c);return {}}
+ return  scnMgr.getDisplayText();
+}
+
+
 function setPreviousScene(){
  var scene = scnMgr.getPreviousScene()
-// console.log("Sending Previous Scene ---------------",scene)
+ console.log("Sending Previous Scene ---------------",scene)
  try { sendScene(scene) }catch(c){console.log("Error Sending Scene",c);return {}}
  return  scnMgr.getDisplayText();
 }
 
 async function sendScene(scene, i=0){  // yes, this is recursive, so keep that i=0
-//    console.log("sending scene",i,scene.actions[i])
+    // console.log("iteration",i)
+    // console.log("sending scene",scene);
+    // console.log("action",i,scene.actions[i])
     if ( i < scene.actions.length){
-        var action = scene.actions[i];
+        var action = {...scene.actions[i]}; // a shallow copy of actions[i]
+
+        if (scene.usesAllOneCamera){
+            if (action.Function == "PreviewInput"){
+//                console.log("Not Showing Preview",action)
+                return;
+            }
+        } 
+        if (scene.previewOnly){
+            if (action.Function == "Fade"){
+                action.Function = "CutDirect"
+                action.Input = action.Ignore;
+
+            }
+        } 
+
+        if (scene.wasSkippedTo){
+            if (action.Function == "Fade"){
+                action.Function = "CutDirect"
+                action.Input = action.Ignore;
+
+            }
+        } 
+
         response = await vMix.send( action )
         sendScene(scene,++i)
     }
 }
 
+async function sendScenePreview(scene, i=0){  // yes, this is recursive, so keep that i=0
+//    console.log("sending scene",i,scene.actions[i])
+    if ( i < scene.actions.length){
+
+        var action = scene.actions[i];
+        if (scene.usesAllOneCamera){
+            if (action.Function == "PreviewInput"){
+                response = await vMix.send( action )
+            }
+        }
+        sendScene(scene,++i)
+    }
+}
 
 function getStatus(){
     return vMix.status;
 }
 
-
 module.exports = {connect:connect, sendScene: sendScene, setFirstScene: setFirstScene,
-    setNextScene: setNextScene, setLastScene: setLastScene, loadSceneFile:loadSceneFile, 
+    setNextScene: setNextScene, skipNextScene: skipNextScene,  skipNextScene: skipNextScene, setLastScene: setLastScene, loadSceneFile:loadSceneFile, 
     setPreviousScene: setPreviousScene, setScenes:setScenes, getStatus: getStatus}
     

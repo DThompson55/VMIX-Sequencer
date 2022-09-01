@@ -1,18 +1,19 @@
 'use strict';
 const workbookTool = require('./workbookTool.js');
 
-var sceneTemplate =    {"number": "INITIAL", "actions":[] }
+var sceneTemplate =    {"number": 0, "description":"", "actions":[], "wasSkippedTo":false, "usesAllOneCamera": false, "forceCut":false, "previewOnly":false  }
 var cmdTemplate =      {"Function": "blank", "Input": -1}; // these have to be uppercase for vMix
 
 var scenes = [];
 var sceneNumber = 1;
+
 
 function buildScenes(rows, callback){
 
     var i = 0;
     var row = rows[i];
     let scene = newScene(); 
-    addToScene(scene,"Preview",row)  ;
+    addToScene(scene,"PreviewInput",row)  ;
     scene.description = ""
     i++;
 
@@ -28,7 +29,19 @@ function buildScenes(rows, callback){
             i++;
             row = rows[i];
         }
-        addToScene(scene,"Preview",row) 
+        addToScene(scene,"PreviewInput",row) 
+        if (row.cameraNumber == prevRow.cameraNumber){
+            scene.usesAllOneCamera = true;
+        }
+    }   
+
+    for (i = 1; i < scenes.length; i++){
+        if (scenes[i-1].usesAllOneCamera){
+            scenes[i].previewOnly = true;
+        }
+        if (scenes[i-1].previewOnly){
+            scenes[i].forceCut = true;
+        }
     }   
 
     callback(null,scenes);
@@ -52,9 +65,6 @@ function addToScene(scene, action, row){
 
     if (action === "Overlay"){
         scene.overlay = row.description;
-    }
-    if (action === "Preview"){
-        action = "PreviewInput";
     }
     cmd.Function = action;
     cmd.Input = row.inputNumber;

@@ -75,15 +75,17 @@ for (; i < 12; i++){
 var firstRow = i;
 var rows=[]
 var rowCount = 0;
-for (; i < 999; i++){
+for (; i < 100; i++){
 try {
 	var row = {}
 	var r = scenesSheet.getRow(i)
 //    console.log("Row",i,r.getCell("B").value.result,r.getCell("D").value)
 	row.rowNumber = i;
 	row.inputNumber =r.getCell("B").value;
-	if ( row.inputNumber == null ) continue;
+	if ( row.inputNumber == null ) {continue;}
+	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.inputNumber =r.getCell("B").value.result;
+	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.shortTitle =r.getCell("D").value;
 	row.isOverlay = false;
 	if (row.shortTitle){

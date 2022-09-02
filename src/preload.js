@@ -4,6 +4,7 @@ const ipc = electron.ipcRenderer;
 
 window.addEventListener('DOMContentLoaded', () => {
   var buttonMask = 0;
+  var warning = "";
 
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector)
@@ -18,9 +19,13 @@ window.addEventListener('DOMContentLoaded', () => {
    document.querySelector('#vmix-status').innerHTML = message;
   })
 
-  ipc.on('validation', (event, message) => {
-   document.querySelector('#validation').innerHTML = message;
+  ipc.on('warning', (event, message) => {
+   warning = message;
   })
+
+  // ipc.on('validation', (event, message) => {
+  //  document.querySelector('#validation').innerHTML = message;
+  // })
 
    const reply = ipc.sendSync('initScenes')
    setDescriptions(reply)
@@ -34,6 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#buttons').style.display = "flex";
       const reply = ipc.sendSync('rewindBtnMsg');
       setDescriptions(reply)
+      document.querySelector('#warning').innerHTML = warning;
 
     })
 

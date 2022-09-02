@@ -81,10 +81,8 @@ function addToScene(scene, action, row){
 
 async function load(workbookPath, vMixCfg, callback){
 try{
-  await workbookTool.load(workbookPath, vMixCfg, (rows, warnings)=>{
-        console.log("1.ERROR",warnings)
+    await workbookTool.load(workbookPath, vMixCfg, (rows, warnings)=>{
     var scenes = buildScenes(rows);
-        console.log("2.ERROR",warnings)
     callback(scenes,warnings)
 })
 }catch(PreviewInput){console.log(PreviewInput.message);}

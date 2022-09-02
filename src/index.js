@@ -38,7 +38,7 @@ const createWindow = () => {
     height: 300,
     webPreferences:{
       preload: path.join(__dirname, 'preload.js'),
-      devTools: false // This will disable dev tools
+      devTools: true // This will disable dev tools
     }
   });
 
@@ -52,14 +52,14 @@ const createWindow = () => {
 
 function loadSceneFile(sceneFilePath, vMixCfg){
       controller.loadSceneFile(sceneFilePath, vMixCfg, (scenes, sceneFileValidation) => {
-         console.log("LOAD SCENE ISSUED",sceneFileValidation)
          if (sceneFileValidation.error){
-//            mainWindow.webContents.send('warning', "Scene file does not match vMix. See logs.")
-            mainWindow.webContents.send('validation', sceneFileValidation)
-            controller.setScenes(scenes);
-            mainWindow.webContents.send('FILE_OPEN', sceneFilePath)
-            mainWindow.setTitle("vMix Sequencer "+sceneFilePath)  
-         }    
+            mainWindow.webContents.send('warning', "Warning: Scene file does not match vMix. See logs.")
+         }
+//       mainWindow.webContents.send('validation', sceneFileValidation)
+         controller.setScenes(scenes);
+         mainWindow.webContents.send('FILE_OPEN', sceneFilePath)
+         mainWindow.setTitle("vMix Sequencer "+sceneFilePath)  
+            
       })
 }
     controller.connect((ctx)=>{
@@ -162,7 +162,6 @@ ipcMain.on('getFileName', (event, arg) => {
    event.returnValue = controller.getFileName()
 })
 ipcMain.on('skipBtnMsg', (event, arg) => {
-   console.log("Saw the Skip Button")
    event.returnValue = controller.skipNextScene()
 })
 

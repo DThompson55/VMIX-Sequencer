@@ -38,7 +38,7 @@ const createWindow = () => {
     height: 300,
     webPreferences:{
       preload: path.join(__dirname, 'preload.js'),
-      devTools: true // This will disable dev tools
+      devTools: false // This will disable dev tools
     }
   });
 

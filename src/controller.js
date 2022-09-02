@@ -44,7 +44,7 @@ function skipNextScene(){
 
 function setPreviousScene(){
  var scene = scnMgr.getPreviousScene()
- console.log("Sending Previous Scene ---------------",scene)
+// console.log("Sending Previous Scene ---------------",scene)
  try { sendScene(scene) }catch(c){console.log("Error Sending Scene",c);return {}}
  return  scnMgr.getDisplayText();
 }

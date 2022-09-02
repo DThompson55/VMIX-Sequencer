@@ -21,6 +21,11 @@ if (process.env["VMIX_FADE"]){
       console.log("VMIX_FADE Env Vbl is NOT set. Default to",500)   
 }
 
+ console.log("VMIX_INPUTNUMBERCOLUMN is",(process.env["VMIX_INPUTNUMBERCOLUMN"] || "not set. Default B"));
+ console.log("VMIX_SHORTTITLECOLUMN is",(process.env["VMIX_SHORTTITLECOLUMN"] || "not set. Default D"));
+ console.log("VMIX_DESCRIPTIONCOLUMN is",(process.env["VMIX_DESCRIPTIONCOLUMN"] || "not set. Default E"));
+
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   // eslint-disable-line global-require

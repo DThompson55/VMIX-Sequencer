@@ -75,31 +75,34 @@ for (; i < 12; i++){
 var firstRow = i;
 var rows=[]
 var rowCount = 0;
+var inputNumberColumn = (process.env["VMIX_INPUTNUMBERCOLUMN"] || "B")
+var shortTitleColumn   = (process.env["VMIX_SHORTTITLECOLUMN"] || "D")
+var descriptionColumn = (process.env["VMIX_dESCRIPTIONCOLUMN"] || "E")
 for (; i < 100; i++){
 try {
 	var row = {}
 	var r = scenesSheet.getRow(i)
 //    console.log("Row",i,r.getCell("B").value.result,r.getCell("D").value)
 	row.rowNumber = i;
-	row.inputNumber =r.getCell("B").value;
+	row.inputNumber =r.getCell(inputNumberColumn).value;
 	if ( row.inputNumber == null ) {continue;}
 	if ( row.inputNumber == "#N/A" ) {continue;}
-	row.inputNumber =r.getCell("B").value.result;
+	row.inputNumber =r.getCell(inputNumberColumn).value.result;
 	if ( row.inputNumber == "#N/A" ) {continue;}
-	row.shortTitle =r.getCell("D").value;
+	row.shortTitle =r.getCell(shortTitleColumn).value;
 	row.isOverlay = false;
 	if (row.shortTitle){
-		row.isOverlay  = ((r.getCell("D").value).toUpperCase().indexOf("OVERLAY"))>=0	
-		row.isOverlay1 = ((r.getCell("D").value).toUpperCase().indexOf("OVERLAY 1"))>=0	
-		row.isOverlay2 = ((r.getCell("D").value).toUpperCase().indexOf("OVERLAY 2"))>=0	
-		row.isOverlay3 = ((r.getCell("D").value).toUpperCase().indexOf("OVERLAY 3"))>=0	
-		row.isOverlay4 = ((r.getCell("D").value).toUpperCase().indexOf("OVERLAY 4"))>=0	
+		row.isOverlay  = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY"))>=0	
+		row.isOverlay1 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 1"))>=0	
+		row.isOverlay2 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 2"))>=0	
+		row.isOverlay3 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 3"))>=0	
+		row.isOverlay4 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 4"))>=0	
 	}
 	row.cameraNumber = NaN;
 	if (row.shortTitle ){
 		row.cameraNumber = parseInt(row.shortTitle.split(" ")[0])
 	}
-	row.desc =r.getCell("E").value;
+	row.desc =r.getCell(descriptionColumn).value;
 	if ( row.desc == null )	row.desc = "";
   	row.description = row.inputNumber+" / "+row.shortTitle+" / "+row.desc
 

@@ -1,0 +1,20 @@
+{
+	"spreadsheet":{
+		"inputColumn":"B",
+		"shortTitleColume":"C"
+	},
+	"vmix":{
+		"delay":10,
+		"fade":700
+		},
+	"BrowserWindow":{
+	 "alwaysOnTop":true,
+	 "width":400,
+	 "height":300,
+	 "webPreferences":{
+     "devTools": false // This will disable dev tools
+    }
+
+}
+
+}

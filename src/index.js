@@ -34,6 +34,7 @@ const createWindow = () => {
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    alwaysOnTop: true,
     width: 400,
     height: 300,
     webPreferences:{

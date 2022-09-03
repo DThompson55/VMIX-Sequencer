@@ -33,14 +33,16 @@ vMix Sequencer uses an Excel Spreadsheet to sequence the scenes in a vMix video 
 ![sequencer screen](images/img1.png)
 
  The vMix Sequencer tells you that you are 
- A) Connected to vMix or not. 
- B) If there is a scene file loaded. 
- C) Other version information.
+ - Connected to vMix or not. 
+ - If there is a scene file loaded. 
+ - Other version information.
  
  
  5. From the File Menu, open the Excel spreadsheet. vMix Sequencer will change to look like this:
- 
+
 ![sequencer screen](images/img2.png)
+
+Each line shows the "Input Number / Short Title / Description" from that line of the Excel spreadsheet.
 
 - Current:	Is the shot currently being output, at the beginning it is left blank
 - Overlay:	Tells you that there is an overlay. You must manage overlays on your own.
@@ -54,7 +56,7 @@ vMix Sequencer uses an Excel Spreadsheet to sequence the scenes in a vMix video 
 
 
 
-## Same PTZ Camera
+### Same PTZ Camera
 If you see the Preview has a line through it, that means it is using the same PTZ camera as what is currently being displayed in output. It should be obvious that previewing the same PTZ camera with different PTZ settings will immediately affect what's being shown. The sequencer detects this situation and will not actually preview this shot. You have a choice to make here, You can either skip this slide entirely using the skip button, or you can go ahead and show the slide using the Forward button. The Back Button might give unexpected results when the same PTZ cammera uses different settings in two consecutive shots.
 
 ![sequencer screen](images/img3.png)

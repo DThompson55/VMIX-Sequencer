@@ -45,19 +45,19 @@ vMix Sequencer uses an Excel Spreadsheet to sequence the scenes in a vMix video 
 Each line shows the "Input Number / Short Title / Description" from that line of the Excel spreadsheet.
 
 - Current:	Is the shot currently being output, at the beginning it is left blank
-- Overlay:	Tells you that there is an overlay. You must manage overlays on your own.
+- Overlay:	Tells you there is an overlay. You must manage overlays on your own.
 - Buttons:	Back, Skip, Forward
 - Preview:	This tells you which shot is currently in preview
 - Next Up:	This tells you what will be previewing next
 - Warning:	This tells you the spreadsheet doesn’t match vMix. It’s a problem.
-- Back Button; 	Moves back one row in the service plan
+- Back Button: 	Moves back one row in the service plan
 - Skip Button:	Ignores what’s in Preview and moves “Next Up” directly to Current.
 - Fwd Button:	Does what you’d expect, moves Preview to Current
 
 
 
 ### Same PTZ Camera
-If you see the Preview has a line through it, that means it is using the same PTZ camera as what is currently being displayed in output. It should be obvious that previewing the same PTZ camera with different PTZ settings will immediately affect what's being shown. The sequencer detects this situation and will not actually preview this shot. You have a choice to make here, You can either skip this slide entirely using the skip button, or you can go ahead and show the slide using the Forward button. The Back Button might give unexpected results when the same PTZ cammera uses different settings in two consecutive shots.
+If you see the Preview has a line through it, that means it is using the same PTZ camera as what is currently being displayed in output. It should be obvious that previewing the same PTZ camera with different PTZ settings than the one being shown will immediately affect the one being shown. The sequencer detects this situation and will not actually preview this shot. You have a choice to make here, You can either skip this slide entirely using the skip button, or you can go ahead and show the slide using the Forward button. The Back Button might give unexpected results when the same PTZ cammera uses different settings in two consecutive shots.
 
 ![sequencer screen](images/img3.png)
 

@@ -34,7 +34,7 @@ vMix Sequencer uses an Excel Spreadsheet to sequence the scenes in a vMix video 
 
  The vMix Sequencer tells you that you are 
  - Connected to vMix or not. 
- - If there is a scene file loaded. 
+ - It is waiting for a scene file (Excel spreadsheet). 
  - Other version information.
  
  

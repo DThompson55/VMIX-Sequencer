@@ -22,7 +22,11 @@ function buildScenes(rows){
         var prevRow = row;
         if (i > 0 ) prevRow = rows[i-1];
         let scene = newScene(); 
-        addToScene(scene,"Fade",prevRow)  
+        addToScene(scene,"Fade",prevRow) 
+        if (prevRow.annotation){
+            console.log("Annotation is",prevRow.annotation)
+        }
+        addToScene(scene,"Fade",prevRow)          
         if (row.isOverlay){
 //            console.log("Added Overlay ",row)
             addToScene(scene,"Overlay",row)    

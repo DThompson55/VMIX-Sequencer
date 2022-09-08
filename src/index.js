@@ -24,6 +24,7 @@ if (process.env["VMIX_FADE"]){
  console.log("VMIX_INPUTNUMBERCOLUMN is",(process.env["VMIX_INPUTNUMBERCOLUMN"] || "not set. Default B"));
  console.log("VMIX_SHORTTITLECOLUMN is",(process.env["VMIX_SHORTTITLECOLUMN"] || "not set. Default D"));
  console.log("VMIX_DESCRIPTIONCOLUMN is",(process.env["VMIX_DESCRIPTIONCOLUMN"] || "not set. Default E"));
+ console.log("VMIX_ANNOTATION is",(process.env["VMIX_ANNOTATIONCOLUMN"] || "not set. Default C"));
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

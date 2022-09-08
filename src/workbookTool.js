@@ -76,9 +76,9 @@ var firstRow = i;
 var rows=[]
 var rowCount = 0;
 var inputNumberColumn = (process.env["VMIX_INPUTNUMBERCOLUMN"] || "B")
-var shortTitleColumn   = (process.env["VMIX_SHORTTITLECOLUMN"] || "D")
+var shortTitleColumn  = (process.env["VMIX_SHORTTITLECOLUMN"]  || "D")
 var descriptionColumn = (process.env["VMIX_DESCRIPTIONCOLUMN"] || "E")
-var annotationColumn = (process.env["VMIX_ANNOTATIONCOLUMN"] || "D")
+var annotationColumn  = (process.env["VMIX_ANNOTATIONCOLUMN"]  || "C")
 for (; i < 100; i++){
 try {
 	var row = {}
@@ -92,6 +92,7 @@ try {
 	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.shortTitle =r.getCell(shortTitleColumn).value;
 	row.annotation = parseInt(annotationColumn)
+	row.isPPTX = shortTitle.toUpperCase().includes("PPTX");
 	row.isOverlay = false;
 	if (row.shortTitle){
 		row.isOverlay  = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY"))>=0	

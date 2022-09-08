@@ -23,10 +23,9 @@ function buildScenes(rows){
         if (i > 0 ) prevRow = rows[i-1];
         let scene = newScene(); 
         addToScene(scene,"Fade",prevRow) 
-        if (prevRow.annotation){
-            console.log("Annotation is",prevRow.annotation)
+        if ( prevRow.isPPTX && (prevRow.annotation != NaN)){
+            addToScene(scene,"SetPosition",row)          
         }
-        addToScene(scene,"Fade",prevRow)          
         if (row.isOverlay){
 //            console.log("Added Overlay ",row)
             addToScene(scene,"Overlay",row)    
@@ -76,6 +75,9 @@ function addToScene(scene, action, row){
     if (action === "Fade"){
         delete cmd.Input;
         cmd.Duration = (process.env["VMIX_FADE"] || 500);
+    }
+    if (action === "SetPosition"){
+        cmd.value = row.annotation;
     }
     if (!scene.description)
         scene.description = row.description;

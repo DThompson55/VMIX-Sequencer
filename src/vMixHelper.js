@@ -18,6 +18,7 @@ async function send(params){ //function (response)
         // vMix apparently needs some time to process, 
         // but how much time? Do I need to pass a time in?
         // maybe it just needs to wait for the fade to complete
+        console.log(retval)
         return retval;
     }
 

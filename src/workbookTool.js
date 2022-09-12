@@ -116,6 +116,8 @@ try {
 	if ( row.desc == null )	row.desc = "";
   	row.description = row.inputNumber+" / "+row.shortTitle+" / "+row.desc
 
+  	console.log(row)
+
 	rows[rowCount++] = row; 
 // console.log(row)
 // break;

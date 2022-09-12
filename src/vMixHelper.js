@@ -36,15 +36,5 @@ async function connect(callback){//{httpResponse, status}
             }
         }
 
-async function resetPowerPoints(vmixCfg){
-    var r = vmixCfg.vMixCfg.vmix.inputs[0].input;
-    for (var i in r){
-        var x = r[i]['$']
-        if (x.type == "PowerPoint"){
-            var p = { "Function":"SetPosition","Value":"0","Input":x.number }
-            await send(p)
-        }
-    }
-}        
 
-module.exports = {connect:connect, send:send, resetPowerPoints, resetPowerPoints}
+module.exports = {connect:connect, send:send }

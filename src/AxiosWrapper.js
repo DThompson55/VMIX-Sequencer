@@ -9,5 +9,3 @@ async function vMixSend(endpoint,params) {
 } 
 
 exports.vMixSend = vMixSend
-
-//UnhandledPromiseRejectionWarning: Error: connect ECONNREFUSED 127.0.0.1:8088

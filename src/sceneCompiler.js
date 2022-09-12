@@ -78,6 +78,7 @@ function addToScene(scene, action, row, transition = {}){
     }
     if (action === "SetPosition"){
         cmd.value = row.annotation;
+        if (cmd.value == NaN) cmd.value = 0;
     }
     if (!scene.description)
         scene.description = row.description;

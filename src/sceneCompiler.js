@@ -8,7 +8,7 @@ var scenes = [];
 var sceneNumber = 1;
 
 
-function buildScenes(rows){
+function buildScenes(rows, transition){
 
     var i = 0;
     var row = rows[i];
@@ -22,7 +22,7 @@ function buildScenes(rows){
         var prevRow = row;
         if (i > 0 ) prevRow = rows[i-1];
         let scene = newScene(); 
-        addToScene(scene,"Fade",prevRow) 
+        addToScene(scene,"Fade",prevRow, transition) 
         if ( prevRow.isPPTX && (prevRow.annotation != NaN)){
             addToScene(scene,"SetPosition",row)          
         }
@@ -62,7 +62,7 @@ function newScene(){
     return scene;
 }
 
-function addToScene(scene, action, row){
+function addToScene(scene, action, row, transition = {}){
 //    console.log("Adding ",action, row,"to",scene)
     let cmd = Object.assign({}, cmdTemplate); // new commmand within a scene
 
@@ -74,7 +74,7 @@ function addToScene(scene, action, row){
     cmd.Ignore = row.inputNumber;
     if (action === "Fade"){
         delete cmd.Input;
-        cmd.Duration = (process.env["VMIX_FADE"] || 500);
+        cmd.Duration = transition.duration;
     }
     if (action === "SetPosition"){
         cmd.value = row.annotation;
@@ -88,7 +88,7 @@ function addToScene(scene, action, row){
 async function load(workbookPath, vMixCfg, callback){
 try{
     await workbookTool.load(workbookPath, vMixCfg, (rows, warnings)=>{
-    var scenes = buildScenes(rows);
+    var scenes = buildScenes(rows,vMixCfg.vmix.transitions[0].transition[1].$);
     callback(scenes,warnings)
 })
 }catch(PreviewInput){console.log(PreviewInput.message);}

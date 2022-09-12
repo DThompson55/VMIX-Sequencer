@@ -4,27 +4,11 @@ const path = require('path');
 
 const isMac = process.platform === 'darwin'
 
-if (process.env["VMIX_RESET_PPTS"]){
-   console.log("VMIX_RESET_PPTS Env Vbl is set to and will set PPTs to their Zero position")   
-} else {
-      console.log("VMIX_RESET_PPTS Env Vbl is NOT set and will not affect PPTs")   
-}
-
-if (process.env["VMIX_DELAY"]){
-   console.log("VMIX_DELAY Env Vbl is set to",process.env["VMIX_DELAY"])   
-} else {
-      console.log("VMIX_DELAY Env Vbl is NOT set. Default to",10)   
-}
-if (process.env["VMIX_FADE"]){
-   console.log("VMIX_FADE Env Vbl is set to",process.env["VMIX_FADE"])   
-} else {
-      console.log("VMIX_FADE Env Vbl is NOT set. Default to",500)   
-}
-
+ console.log("VMIX_DELAY is",(process.env["VMIX_DELAY"] || "not set. Default 10"));
  console.log("VMIX_INPUTNUMBERCOLUMN is",(process.env["VMIX_INPUTNUMBERCOLUMN"] || "not set. Default B"));
  console.log("VMIX_SHORTTITLECOLUMN is",(process.env["VMIX_SHORTTITLECOLUMN"] || "not set. Default D"));
  console.log("VMIX_DESCRIPTIONCOLUMN is",(process.env["VMIX_DESCRIPTIONCOLUMN"] || "not set. Default E"));
- console.log("VMIX_ANNOTATION is",(process.env["VMIX_ANNOTATIONCOLUMN"] || "not set. Default C"));
+ console.log("VMIX_ANNOTATIONCOLUMN is",(process.env["VMIX_ANNOTATIONCOLUMN"] || "not set. Default C"));
 
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -91,6 +75,7 @@ const template = [
    
             label: "Open...", click(){            
              dialog.showOpenDialog({
+                filters: [{ name: 'Service Scripts', extensions: ['xlsx'] }],
                 properties: ['openFile']
               })
               .then(function(fileObj) {

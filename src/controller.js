@@ -4,9 +4,6 @@ const vMix = require('./vMixHelper.js')
 function connect(callback){ //{vMixCfg:result, vMixStatus:"Connected to vMix"}
 console.log("CONNECTING...");
     vMix.connect(cfg=>{
-        if (process.env["VMIX_RESET_PPTS"]){
-            vMix.resetPowerPoints(cfg);
-        }
         callback(cfg);
     })
 }

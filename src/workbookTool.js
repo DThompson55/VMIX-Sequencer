@@ -12,10 +12,11 @@ var errorBag = []
 
 var mismatch = false;
 
+
 	for (var i = 0; i < vMixCfg.vmix.inputs[0].input.length; i++) {
 		let row = vMixCfg.vmix.inputs[0].input[i].$;
 		if (shortTitleBag[row.shortTitle]){
-			errorBag[("Duplcate shortTitle",shortTitle,"in vMix")]="";
+			errorBag[("Duplcate shortTitle",row.shortTitle,"in vMix")]="";
 			mismatch=true;
 		}
 		numberBag["_"+row.number] = row.shortTitle;
@@ -79,6 +80,12 @@ var inputNumberColumn = (process.env["VMIX_INPUTNUMBERCOLUMN"] || "B")
 var shortTitleColumn  = (process.env["VMIX_SHORTTITLECOLUMN"]  || "D")
 var descriptionColumn = (process.env["VMIX_DESCRIPTIONCOLUMN"] || "E")
 var annotationColumn  = (process.env["VMIX_ANNOTATIONCOLUMN"]  || "C")
+
+console.log("InputNumber Column is",inputNumberColumn)
+console.log("Annotation Column is",annotationColumn)
+console.log("Short Title column is",shortTitleColumn)
+console.log("Description Column is",annotationColumn)
+
 for (; i < 100; i++){
 try {
 	var row = {}
@@ -92,7 +99,7 @@ try {
 	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.shortTitle =r.getCell(shortTitleColumn).value;
 	row.annotation = parseInt(annotationColumn)
-	row.isPPTX = shortTitle.toUpperCase().includes("PPTX");
+	row.isPPTX = row.shortTitle.toUpperCase().includes("PPTX");
 	row.isOverlay = false;
 	if (row.shortTitle){
 		row.isOverlay  = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY"))>=0	

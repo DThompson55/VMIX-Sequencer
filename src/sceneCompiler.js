@@ -24,7 +24,7 @@ function buildScenes(rows, transition){
         let scene = newScene(); 
         addToScene(scene,"Fade",prevRow, transition) 
         if ( prevRow.isPPTX && (prevRow.annotation != NaN)){
-            addToScene(scene,"SetPosition",row)          
+            addToScene(scene,"SetPosition",prevRow)          
         }
         if (row.isOverlay){
 //            console.log("Added Overlay ",row)
@@ -79,6 +79,7 @@ function addToScene(scene, action, row, transition = {}){
     if (action === "SetPosition"){
         cmd.value = row.annotation;
         if (cmd.value == NaN) cmd.value = 0;
+        console.log(row.annotation,cmd.value)
     }
     if (!scene.description)
         scene.description = row.description;

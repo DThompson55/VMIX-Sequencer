@@ -98,7 +98,7 @@ try {
 	row.inputNumber =r.getCell(inputNumberColumn).value.result;
 	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.shortTitle =r.getCell(shortTitleColumn).value;
-	row.annotation = parseInt(annotationColumn)
+	row.annotation = parseInt(r.getCell(annotationColumn).value);
 	row.isPPTX = row.shortTitle.toUpperCase().includes("PPTX");
 	row.isOverlay = false;
 	if (row.shortTitle){

@@ -10,6 +10,7 @@ const isMac = process.platform === 'darwin'
  console.log("VMIX_DESCRIPTIONCOLUMN is",(process.env["VMIX_DESCRIPTIONCOLUMN"] || "not set. Default E"));
  console.log("VMIX_ANNOTATIONCOLUMN is",(process.env["VMIX_ANNOTATIONCOLUMN"] || "not set. Default C"));
 
+app.disableHardwareAcceleration()
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {

@@ -99,6 +99,7 @@ try {
 	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.shortTitle =r.getCell(shortTitleColumn).value;
 	row.annotation = parseInt(r.getCell(annotationColumn).value);
+	console.log("---",i,annotationColumn,r.getCell(annotationColumn).value),parseInt(r.getCell(annotationColumn).value);
 	row.isPPTX = row.shortTitle.toUpperCase().includes("PPTX");
 	row.isOverlay = false;
 	if (row.shortTitle){
@@ -115,9 +116,6 @@ try {
 	row.desc =r.getCell(descriptionColumn).value;
 	if ( row.desc == null )	row.desc = "";
   	row.description = row.inputNumber+" / "+row.shortTitle+" / "+row.desc
-
-  	console.log(row)
-
 	rows[rowCount++] = row; 
 // console.log(row)
 // break;

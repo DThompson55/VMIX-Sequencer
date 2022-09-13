@@ -14,7 +14,7 @@ async function send(params){ //function (response)
         if (params.Function == "Fade"){
             await sleep(params.Duration) 
         }
-        await sleep(process.env["VMIX_DELAY"] || 10) 
+        await sleep(process.env["VMIX_DELAY"] || 100) 
         // vMix apparently needs some time to process, 
         // but how much time? Do I need to pass a time in?
         // maybe it just needs to wait for the fade to complete

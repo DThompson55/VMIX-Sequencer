@@ -10,22 +10,32 @@ var numberBag = []
 var shortTitleBag = []
 var errorBag = []
 
+var showWarns = false;
+
 var mismatch = false;
 
-
 	for (var i = 0; i < vMixCfg.vmix.inputs[0].input.length; i++) {
-		let row = vMixCfg.vmix.inputs[0].input[i].$;
-		if (shortTitleBag[row.shortTitle]){
-			errorBag[("Duplcate shortTitle",row.shortTitle,"in vMix")]="";
+		let vMixInput = vMixCfg.vmix.inputs[0].input[i].$;
+		let shortTitle = vMixInput.shortTitle;
+		if (shortTitleBag[vMixInput.shortTitle]){
+			errorBag[("Duplcate shortTitle",vMixInput.shortTitle,"in vMix")]="";
 			mismatch=true;
 		}
-		numberBag["_"+row.number] = row.shortTitle;
-		shortTitleBag[row.shortTitle] = row.number;
+		numberBag["_"+vMixInput.number] = vMixInput.shortTitle;
+		shortTitleBag[vMixInput.shortTitle] = vMixInput;
+//		console.log("YYY",vMixInput.shortTitle,"X",shortTitleBag[vMixInput.shortTitle],"X",vMixInput)
 	}
 
 	for (var i in rows) {
 		var shortTitle = rows[i].shortTitle;
 		var inputNumber = rows[i].inputNumber;
+		if (shortTitleBag[shortTitle])
+			rows[i].type = shortTitleBag[shortTitle].type;
+		else
+			rows[i].type = "Unknown";
+		rows[i].cfg = shortTitleBag[shortTitle]
+//		console.log("XXX",i,shortTitle,shortTitleBag[shortTitle])
+
 
 		if (inputNumber == "#N/A"){
 			// we don't care about #N/A
@@ -42,7 +52,7 @@ var mismatch = false;
 		} else if (shortTitleBag[shortTitle] == null){
 			errorBag[("3.Service Plan Uses an Input Name",shortTitle,"that isn't in vMix")]="";
 			mismatch=true;	
-		} else if (shortTitleBag[shortTitle] != inputNumber){
+		} else if (shortTitleBag[shortTitle].number != inputNumber){
 			errorBag[("4.Service Plan Uses an number/title "+inputNumber+"/'"+shortTitle+"' that doesn't match vMix "+inputNumber+"/'"+(numberBag["_"+inputNumber])+"'")]="";
 //			errorBag[("eService Plan uses an Input Number and Name (",inputNumber,shortTitle,") that don't match vMix");	]="";
 			mismatch=true;	
@@ -55,11 +65,10 @@ var mismatch = false;
 		} 
 	}
 
-	console.log(Object.keys(errorBag).sort())
+	if ( showWarns )console.log(Object.keys(errorBag).sort())
 	return({"error":mismatch,"msg":(mismatch?"Mismatch warnings. See logs.":"OK")})
 }
 
-//--------------------------------------------------
 async function loadWorkbook(workbookPath, vMixCfg, callback){
 await workbook.xlsx.readFile(workbookPath);
 let scenesSheet = workbook.getWorksheet('Sheet1'); //Scenes
@@ -77,14 +86,14 @@ var firstRow = i;
 var rows=[]
 var rowCount = 0;
 var inputNumberColumn = (process.env["VMIX_INPUTNUMBERCOLUMN"] || "B")
+var annotationColumn  = (process.env["VMIX_ANNOTATIONCOLUMN"]  || "C")
 var shortTitleColumn  = (process.env["VMIX_SHORTTITLECOLUMN"]  || "D")
 var descriptionColumn = (process.env["VMIX_DESCRIPTIONCOLUMN"] || "E")
-var annotationColumn  = (process.env["VMIX_ANNOTATIONCOLUMN"]  || "C")
 
 console.log("InputNumber Column is",inputNumberColumn)
 console.log("Annotation Column is",annotationColumn)
 console.log("Short Title column is",shortTitleColumn)
-console.log("Description Column is",annotationColumn)
+console.log("Description Column is",descriptionColumn)
 
 for (; i < 100; i++){
 try {
@@ -99,15 +108,14 @@ try {
 	if ( row.inputNumber == "#N/A" ) {continue;}
 	row.shortTitle =r.getCell(shortTitleColumn).value;
 	row.annotation = parseInt(r.getCell(annotationColumn).value);
-	console.log("---",i,annotationColumn,r.getCell(annotationColumn).value),parseInt(r.getCell(annotationColumn).value);
 	row.isPPTX = row.shortTitle.toUpperCase().includes("PPTX");
 	row.isOverlay = false;
 	if (row.shortTitle){
 		row.isOverlay  = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY"))>=0	
-		row.isOverlay1 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 1"))>=0	
-		row.isOverlay2 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 2"))>=0	
-		row.isOverlay3 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 3"))>=0	
-		row.isOverlay4 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 4"))>=0	
+		// row.isOverlay1 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 1"))>=0	
+		// row.isOverlay2 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 2"))>=0	
+		// row.isOverlay3 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 3"))>=0	
+		// row.isOverlay4 = ((r.getCell(shortTitleColumn).value).toUpperCase().indexOf("OVERLAY 4"))>=0	
 	}
 	row.cameraNumber = NaN;
 	if (row.shortTitle ){

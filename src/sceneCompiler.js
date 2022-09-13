@@ -24,7 +24,7 @@ function buildScenes(rows, transition){
         let scene = newScene(); 
         addToScene(scene,"Fade",prevRow, transition) 
 
-        console.log(prevRow,!Number.isNaN(prevRow.annotation))
+        console.log("A",prevRow,!Number.isNaN(prevRow.annotation))
 
         if ( prevRow.isPPTX && !Number.isNaN(prevRow.annotation)){
             addToScene(scene,"SetPosition",prevRow)          
@@ -82,7 +82,7 @@ function addToScene(scene, action, row, transition = {}){
     if (action === "SetPosition"){
         cmd.Value = row.annotation;
         if (Number.isNaN(cmd.Value)) cmd.Value = 1;
-        console.log(row.annotation,cmd.Value)
+        console.log("B",row.annotation,cmd.Value)
     }
     if (!scene.description)
         scene.description = row.description;

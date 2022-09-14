@@ -56,6 +56,10 @@ async function sendScene(scene, i=0){  // yes, this is recursive, so keep that i
         if (scene.usesAllOneCamera){
             if (action.Function == "PreviewInput"){
 //                console.log("Not Showing Preview",action)
+//  This is a little strange, yet clever because when it 
+//  returns it's just bumping the interation stack
+//
+//
                 return;
             }
         } 
@@ -66,6 +70,9 @@ async function sendScene(scene, i=0){  // yes, this is recursive, so keep that i
 
             }
         } 
+        if (action.Function == "Overlay"){
+            return; // at this point in time we are not sending overlays to VMIX
+        }
 
         if (scene.wasSkippedTo){
             if (action.Function == "Fade"){

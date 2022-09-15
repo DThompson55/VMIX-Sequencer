@@ -10,7 +10,6 @@ function sleep(ms) {
 
 async function send(params){ //function (response)
     var retval = axiosWrapper.vMixSend("/api", params)
-//        console.log(params)
         if (params.Function == "Fade"){
             await sleep(params.Duration) 
         }
@@ -22,7 +21,6 @@ async function send(params){ //function (response)
     }
 
 async function connect(callback){//{httpResponse, status}
-
         try {
             response = await send({})
             parser.parseString(response.data, (err,result) => {
@@ -37,4 +35,4 @@ async function connect(callback){//{httpResponse, status}
         }
 
 
-module.exports = {connect:connect, send:send }
+module.exports = {connect:connect, send:send}
